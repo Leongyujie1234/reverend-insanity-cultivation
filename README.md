@@ -15,13 +15,13 @@ See [**Releases**](../../releases/latest):
 
 ## What's fixed vs. the upstream 1.0.0 build
 
-1. **Client crash on `Options → Controls → Key Binds`.** The upstream client bridge looked up `net.minecraft.resources.ResourceLocation`, which no longer exists in 26.x (it is `net.minecraft.resources.Identifier`). The failed lookup silently left the keybind category `null`, and the 7 keybinds were still registered — opening the Key Binds screen then crashed the game (`KeyBindsList$CategoryEntry` NPE, then a render NPE). The rebuilt bridge:
-   - resolves `Identifier` / `ResourceLocation` dynamically,
-   - registers the `reverend_insanity:cultivation` category via `KeyMapping$Category.register`,
-   - registers **no keybinds at all** if no category can be created (so it can never crash the screen again),
-   - keeps the in-game handshake and the `/trigger` action path working.
+1. **Client bridge rebuilt (`ClientKeybindBridge`) — fixes two separate bugs:**
+   - **Crash on `Options → Controls → Key Binds`.** The upstream bridge looked up `net.minecraft.resources.ResourceLocation`, which no longer exists in 26.x (it is `net.minecraft.resources.Identifier`). The failed lookup left the keybind category `null` while the 7 keybinds were still registered — opening the Key Binds screen crashed the game (`KeyBindsList$CategoryEntry` NPE, then a render NPE). The rebuilt bridge resolves `Identifier` / `ResourceLocation` dynamically, registers the `reverend_insanity:cultivation` category via `KeyMapping$Category.register`, and registers **no keybinds at all** if no category can be created (so it can never crash the screen again).
+   - **Dead hotkeys (`R G V B O P M` did nothing, no server handshake).** The first rebuild hooked the client tick event through Fabric's package-private event implementation class, so registration threw `IllegalAccessException` — every keybind press and the handshake were silently swallowed. The hook now registers through the public `Event` superclass; the handshake (`action 99`) and all keybinds work again.
 2. **`exec_104` (Black Boar Gu) failed to load.** The function contained an invalid particle ID (`minecraft:Large_smoke` — resource IDs must be lowercase), so the whole function refused to load and the cast died at runtime. Fixed to `minecraft:large_smoke`.
-3. **Resource pack**: removed the deprecated `supported_formats` block from `pack.mcmeta` (kills the `pack format 82` fallback warnings and fixes server-side merging / Polymer rejection).
+3. **The remaining 5 broken casts are repaired inside the jar** — `exec_101` (Moonlight), `exec_201` (Moonglow), `exec_204` (Blood Moon), `exec_301` (Golden Moon), `exec_302` (Chainsaw). Their damage/effect application was rewritten so the functions load and hit every target in the blast; upstream versions refused to load (clients logged 6 failed functions, now zero).
+4. **VFX overhaul — Moonlight & Moonglow Gu.** Moonlight throws a curved **pale-azure energy crescent** (layered dust arc + spark tips + slash) instead of a blue `soul_fire_flame` spray. Moonglow throws a bigger **sapphire piercing crescent** with a travelling energy streak along its path.
+5. **Resource pack**: removed the deprecated `supported_formats` block from `pack.mcmeta` (kills the `pack format 82` fallback warnings and fixes server-side merging / Polymer rejection).
 
 ## Added: admin cultivation commands
 
@@ -35,7 +35,7 @@ Operator (permission level 2) only.
 
 After a reset the player re-awakens with a Hope Gu. After a purge they can rebuild from scratch with `/trigger ri_starter`.
 
-`src/` contains the sources of everything changed vs. upstream: the patched `ClientKeybindBridge` class, the fixed `exec_104` function, and the admin functions. Everything else is byte-identical to upstream.
+`src/` contains the sources of everything changed vs. upstream: the patched `ClientKeybindBridge` class, the six fixed cast functions (`exec_101/104/201/204/301/302`), and the admin functions. Everything else is byte-identical to upstream.
 
 ## Keybinds (client defaults)
 

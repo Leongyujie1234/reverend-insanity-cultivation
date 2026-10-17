@@ -9,16 +9,16 @@ import java.lang.reflect.Proxy;
 /**
  * Hardened keybind bridge for Minecraft 26.1.2 (client side).
  *
- * Original build looked up "net.minecraft.resources.ResourceLocation", which no
- * longer exists in 26.x (renamed to "net.minecraft.resources.Identifier").
- * The failed lookup left CATEGORY_OBJ null, and KeyMapping instances were still
- * constructed with a null category, which crashes the vanilla Key Binds screen
- * (KeyBindsList$CategoryEntry NPE: "category is null").
- *
- * Fix: resolve the identifier class dynamically (Identifier first, then
- * ResourceLocation), locate KeyMapping$Category.register reflectively, and if
- * no category can be created, register no keybinds at all. A missing keybind
- * is harmless; the /trigger ri_action path keeps working either way.
+ * Fix history:
+ *  - upstream: looked up "net.minecraft.resources.ResourceLocation" (renamed to Identifier in 26.x);
+ *    the failed lookup left the keybind category null while the keybinds were still registered,
+ *    which crashed the vanilla Key Binds screen (KeyBindsList$CategoryEntry NPE).
+ *  - v2: resolved Identifier-first and skipped keybind registration when no category exists, but it
+ *    hooked the client tick via events.getClass().getMethod("register", ...). The Fabric event
+ *    implementation class is package-private, so registration threw IllegalAccessException and no
+ *    hotkey (and no server handshake) ever worked.
+ *  - v3 (this): registers the tick listener through the public Event superclass, adds resilient
+ *    field/method resolution for the command dispatch and prints one-shot diagnostics.
  */
 public class ClientKeybindBridge implements InvocationHandler {
 
@@ -32,6 +32,7 @@ public class ClientKeybindBridge implements InvocationHandler {
     public static Object CATEGORY_OBJ;
 
     private static boolean INITIALIZED = false;
+    private static int DISPATCH_ERROR_PRINTS = 0;
 
     public ClientKeybindBridge() {
     }
@@ -89,7 +90,7 @@ public class ClientKeybindBridge implements InvocationHandler {
         if (CATEGORY_OBJ == null) {
             return;
         }
-        if (KEY_MAPPINGS != null && index >= 0 && index < KEY_MAPPINGS.length && KEY_MAPPINGS[index] != null) {
+        if (KEY_MAPPINGS == null || index < 0 || index >= KEY_MAPPINGS.length || KEY_MAPPINGS[index] != null) {
             return;
         }
         try {
@@ -131,10 +132,35 @@ public class ClientKeybindBridge implements InvocationHandler {
                     endTick.getClassLoader(),
                     new Class<?>[]{endTick},
                     new ClientKeybindBridge());
-            events.getClass().getMethod("register", Object.class).invoke(events, proxy);
+            Method register = resolveRegisterMethod(events);
+            if (register == null) {
+                System.out.println("[Reverend Insanity Client] Event register method not found; hotkeys disabled.");
+                return;
+            }
+            register.invoke(events, proxy);
+            System.out.println("[Reverend Insanity Client] Keybind tick hook registered.");
         } catch (Throwable t) {
             System.out.println("[Reverend Insanity Client] Tick hook failed: " + t);
         }
+    }
+
+    private static Method resolveRegisterMethod(Object events) {
+        // Public API superclass first: the runtime implementation class is package-private and
+        // invoking its method directly throws IllegalAccessException.
+        try {
+            return Class.forName("net.fabricmc.fabric.api.event.Event").getMethod("register", Object.class);
+        } catch (Throwable ignored) {
+            // fall through to the scan
+        }
+        for (Method m : events.getClass().getMethods()) {
+            if ("register".equals(m.getName())
+                    && m.getParameterCount() == 1
+                    && m.getParameterTypes()[0] == Object.class
+                    && Modifier.isPublic(m.getDeclaringClass().getModifiers())) {
+                return m;
+            }
+        }
+        return null;
     }
 
     public static void init() {
@@ -157,10 +183,72 @@ public class ClientKeybindBridge implements InvocationHandler {
         System.out.println("[Reverend Insanity Client] Keybind bridge ready for Minecraft 26.1.2!");
     }
 
+    private static void reportDispatch(String msg) {
+        if (DISPATCH_ERROR_PRINTS < 4) {
+            DISPATCH_ERROR_PRINTS++;
+            System.out.println("[Reverend Insanity Client] dispatch error: " + msg);
+        }
+    }
+
+    private static Field resolveField(Class<?> cls, String name) {
+        try {
+            return cls.getField(name);
+        } catch (Throwable ignored) {
+            // fall back to declared fields (may be protected/private)
+        }
+        Class<?> c = cls;
+        while (c != null && c != Object.class) {
+            try {
+                Field f = c.getDeclaredField(name);
+                try {
+                    f.setAccessible(true);
+                } catch (Throwable ignored) {
+                    // the outer get() will surface the real problem
+                }
+                return f;
+            } catch (Throwable ignored) {
+                c = c.getSuperclass();
+            }
+        }
+        return null;
+    }
+
+    private static Method resolveCommandMethod(Class<?> connClass) {
+        try {
+            return connClass.getMethod("sendCommand", String.class);
+        } catch (Throwable ignored) {
+            // fall back to declared methods
+        }
+        Class<?> c = connClass;
+        while (c != null && c != Object.class) {
+            for (Method m : c.getDeclaredMethods()) {
+                if ("sendCommand".equals(m.getName())
+                        && m.getParameterCount() == 1
+                        && m.getParameterTypes()[0] == String.class) {
+                    try {
+                        m.setAccessible(true);
+                    } catch (Throwable ignored) {
+                        // the outer invoke will surface the real problem
+                    }
+                    return m;
+                }
+            }
+            c = c.getSuperclass();
+        }
+        return null;
+    }
+
     public static void dispatchAction(Object minecraft, int action) {
         try {
+            if (minecraft == null) {
+                return;
+            }
             if (PLAYER_FIELD == null) {
-                PLAYER_FIELD = minecraft.getClass().getField("player");
+                PLAYER_FIELD = resolveField(minecraft.getClass(), "player");
+                if (PLAYER_FIELD == null) {
+                    reportDispatch("player field not found on " + minecraft.getClass().getName());
+                    return;
+                }
             }
             Object player = PLAYER_FIELD.get(minecraft);
             if (player == null) {
@@ -168,14 +256,22 @@ public class ClientKeybindBridge implements InvocationHandler {
                 return;
             }
             if (CONNECTION_FIELD == null) {
-                CONNECTION_FIELD = player.getClass().getField("connection");
+                CONNECTION_FIELD = resolveField(player.getClass(), "connection");
+                if (CONNECTION_FIELD == null) {
+                    reportDispatch("connection field not found on " + player.getClass().getName());
+                    return;
+                }
             }
             Object connection = CONNECTION_FIELD.get(player);
             if (connection == null) {
                 return;
             }
             if (SEND_COMMAND_METHOD == null) {
-                SEND_COMMAND_METHOD = connection.getClass().getMethod("sendCommand", String.class);
+                SEND_COMMAND_METHOD = resolveCommandMethod(connection.getClass());
+                if (SEND_COMMAND_METHOD == null) {
+                    reportDispatch("sendCommand method not found on " + connection.getClass().getName());
+                    return;
+                }
             }
             if (action == 5) {
                 action = 50;
@@ -183,26 +279,36 @@ public class ClientKeybindBridge implements InvocationHandler {
             if (action == 6) {
                 action = 60;
             }
-            String command = "trigger ri_action set " + action;
-            SEND_COMMAND_METHOD.invoke(connection, command);
-        } catch (Throwable ignored) {
-            // never crash the client from a keybind dispatch
+            SEND_COMMAND_METHOD.invoke(connection, "trigger ri_action set " + action);
+        } catch (Throwable t) {
+            reportDispatch(String.valueOf(t));
         }
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) {
         try {
-            if (args != null && CONSUME_CLICK_METHOD != null) {
-                if (!HANDSHAKE_SENT) {
-                    HANDSHAKE_SENT = true;
-                    dispatchAction(args[0], 99);
-                }
-                for (int i = 0; i < KEY_MAPPINGS.length; i++) {
-                    Object mapping = KEY_MAPPINGS[i];
-                    if (mapping != null) {
-                        if (Boolean.TRUE.equals(CONSUME_CLICK_METHOD.invoke(mapping, EMPTY_ARGS))) {
-                            dispatchAction(args[0], i + 1);
-                        }
+            String name = method.getName();
+            if ("equals".equals(name) && args != null && args.length == 1) {
+                return proxy == args[0];
+            }
+            if ("hashCode".equals(name)) {
+                return System.identityHashCode(proxy);
+            }
+            if (!"onEndTick".equals(name)) {
+                return null;
+            }
+            if (args == null || args.length == 0 || CONSUME_CLICK_METHOD == null || KEY_MAPPINGS == null) {
+                return null;
+            }
+            if (!HANDSHAKE_SENT) {
+                HANDSHAKE_SENT = true;
+                dispatchAction(args[0], 99);
+            }
+            for (int i = 0; i < KEY_MAPPINGS.length; i++) {
+                Object mapping = KEY_MAPPINGS[i];
+                if (mapping != null) {
+                    if (Boolean.TRUE.equals(CONSUME_CLICK_METHOD.invoke(mapping, EMPTY_ARGS))) {
+                        dispatchAction(args[0], i + 1);
                     }
                 }
             }
