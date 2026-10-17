@@ -1,0 +1,28 @@
+# reverend_insanity:admin/purge_cultivation_target (MACRO) - resets ALL cultivation progress of the target AND deletes every Reverend Insanity item from them.
+# Usage: /function reverend_insanity:admin/purge_cultivation_target {target:"PlayerName"}
+# NOTE: item deletion requires the target to be ONLINE. Score reset works for offline players too.
+$function reverend_insanity:admin/clear_cultivation_target {target:"$(target)"}
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:5}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:101}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:102}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:103}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:104}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:105}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:106}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:107}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:108}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:109}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:121}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:201}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:202}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:203}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:204}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:205}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:206}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:207}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:301}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:302}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:303}]
+$execute if entity $(target) run clear $(target) minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{ri_code:304}]
+$execute if entity $(target) run tellraw $(target) [{"text":"✦ Your cultivation was purged. ","color":"red","bold":true},{"text":"Run ","color":"gray"},{"text":"/trigger ri_starter","color":"gold"},{"text":" to start over.","color":"gray"}]
+tellraw @s [{"text":"✓ Full purge complete (scores + Gu items removed).","color":"green"}]
