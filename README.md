@@ -4,6 +4,8 @@ Unofficial fixed build of the **Reverend Insanity: Cultivation (Rank 1–3)** Fa
 
 Built for our SMP and published for easy distribution. **Original mod by "Gu Zhen Ren Inspired Modding Team" (MIT license)** — this repo repackages it with small fixes and a few admin conveniences.
 
+📋 Every single change vs. the upstream build is audited in **[CHANGELOG.md](CHANGELOG.md)** (10 jar entries + 1 pack fix, everything else byte-identical).
+
 ## ⬇️ Download
 
 See [**Releases**](../../releases/latest):
