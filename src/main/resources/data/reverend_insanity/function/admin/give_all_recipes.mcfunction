@@ -1,0 +1,20 @@
+function reverend_insanity:books/give_recipe_1
+function reverend_insanity:books/give_recipe_2
+function reverend_insanity:books/give_recipe_3
+function reverend_insanity:books/give_recipe_4
+function reverend_insanity:books/give_recipe_5
+function reverend_insanity:books/give_recipe_6
+function reverend_insanity:books/give_recipe_7
+function reverend_insanity:books/give_recipe_8
+function reverend_insanity:books/give_recipe_9
+function reverend_insanity:books/give_recipe_10
+function reverend_insanity:books/give_recipe_11
+function reverend_insanity:books/give_recipe_12
+function reverend_insanity:books/give_recipe_13
+function reverend_insanity:books/give_recipe_14
+function reverend_insanity:books/give_recipe_15
+function reverend_insanity:books/give_recipe_16
+function reverend_insanity:books/give_recipe_17
+function reverend_insanity:books/give_recipe_18
+function reverend_insanity:books/give_recipe_19
+tellraw @s [{"text":"[Reverend Insanity Admin] ","color":"gold"},{"text":"Granted all 19 Gu Refinement Recipe Books.","color":"green"}]

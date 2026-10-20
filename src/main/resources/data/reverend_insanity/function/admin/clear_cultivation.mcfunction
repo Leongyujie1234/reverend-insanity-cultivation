@@ -35,3 +35,6 @@ clear @s minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{reverend_insa
 clear @s minecraft:warped_fungus_on_a_stick[minecraft:custom_data~{reverend_insanity_gu:"thunder_wings_gu"}]
 playsound minecraft:block.beacon.deactivate player @s ~ ~ ~ 1.0 0.8
 tellraw @s [{text:"[Admin] ",color:"red",bold:true},{text:"Your Primeval Aperture, Aptitude, and Gu Worms have been completely cleared and reset to mortal state.",color:"gray"}]
+
+scoreboard players set @s ri_open_book 0
+function reverend_insanity:sync_player

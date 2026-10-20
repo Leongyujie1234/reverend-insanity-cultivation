@@ -9,3 +9,6 @@ scoreboard players set @s ri_essence 2475
 scoreboard players set @s ri_wall 0
 function reverend_insanity:give_all_gu
 tellraw @s [{text:"[Admin] ",color:"gold",bold:true},{text:"Granted Rank 3 Peak Stage (Snow Silver Essence), Grade A (99% Aptitude - 2475/2475), and all 19 Gu Worms!",color:"green"}]
+
+scoreboard players set @s ri_open_book 0
+function reverend_insanity:sync_player

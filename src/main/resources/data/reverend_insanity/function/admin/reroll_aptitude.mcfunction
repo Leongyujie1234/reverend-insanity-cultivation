@@ -15,3 +15,6 @@ execute if score @s ri_rank matches 3 run scoreboard players operation @s ri_max
 execute if score @s ri_rank matches 3 run scoreboard players operation @s ri_max_ess *= #twentyfive ri_roll
 scoreboard players operation @s ri_essence = @s ri_max_ess
 tellraw @s [{text:"[Admin] ",color:"gold",bold:true},{text:"Rerolled your Aptitude to ",color:"gray"},{score:{name:"@s",objective:"ri_apt_pct"},color:"aqua",bold:true},{text:"%!",color:"aqua",bold:true}]
+
+scoreboard players set @s ri_open_book 0
+function reverend_insanity:sync_player
