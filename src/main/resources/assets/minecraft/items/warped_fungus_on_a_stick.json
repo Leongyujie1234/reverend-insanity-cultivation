@@ -1,0 +1,160 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/warped_fungus_on_a_stick"
+    },
+    "entries": [
+      {
+        "threshold": 1001,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/moonlight_gu"
+        }
+      },
+      {
+        "threshold": 1002,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/liquor_worm"
+        }
+      },
+      {
+        "threshold": 1003,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/white_boar_gu"
+        }
+      },
+      {
+        "threshold": 1004,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/black_boar_gu"
+        }
+      },
+      {
+        "threshold": 1005,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/jade_skin_gu"
+        }
+      },
+      {
+        "threshold": 1006,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/little_light_gu"
+        }
+      },
+      {
+        "threshold": 1007,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/stealth_scales_gu"
+        }
+      },
+      {
+        "threshold": 1008,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/vitality_leaf_gu"
+        }
+      },
+      {
+        "threshold": 1009,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/hope_gu"
+        }
+      },
+      {
+        "threshold": 2001,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/moonglow_gu"
+        }
+      },
+      {
+        "threshold": 2002,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/four_flavors_liquor_worm"
+        }
+      },
+      {
+        "threshold": 2003,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/white_jade_gu"
+        }
+      },
+      {
+        "threshold": 2004,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/blood_moon_gu"
+        }
+      },
+      {
+        "threshold": 2005,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/moon_raiment_gu"
+        }
+      },
+      {
+        "threshold": 2006,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/earth_communication_ear_grass"
+        }
+      },
+      {
+        "threshold": 2007,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/iron_bone_gu"
+        }
+      },
+      {
+        "threshold": 3001,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/golden_moon_gu"
+        }
+      },
+      {
+        "threshold": 3002,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/chainsaw_golden_centipede"
+        }
+      },
+      {
+        "threshold": 3003,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/sky_canopy_gu"
+        }
+      },
+      {
+        "threshold": 3004,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/thunder_wings_gu"
+        }
+      },
+      {
+        "threshold": 9001,
+        "model": {
+          "type": "minecraft:model",
+          "model": "reverend_insanity:item/primeval_stone"
+        }
+      }
+    ]
+  }
+}

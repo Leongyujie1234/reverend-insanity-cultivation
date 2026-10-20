@@ -1,0 +1,12 @@
+scoreboard players set @s ri_wall 0
+scoreboard players add @s ri_stage 1
+playsound minecraft:block.amethyst_block.chime player @s ~ ~ ~ 1.0 1.2
+execute if score @s ri_rank matches 1 if score @s ri_stage matches 2 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"green",bold:true},{text:"Light Membrane shattered into Water Membrane! Rank 1 Middle Stage (Pale Green Essence).",color:"aqua"}]
+execute if score @s ri_rank matches 1 if score @s ri_stage matches 3 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"green",bold:true},{text:"Water Membrane condensed into Stone Membrane! Rank 1 Upper Stage (Dark Green Essence).",color:"dark_green"}]
+execute if score @s ri_rank matches 1 if score @s ri_stage matches 4 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"green",bold:true},{text:"Stone Membrane crystallized into Crystal Membrane! Rank 1 Peak Stage (Black Green Essence).",color:"dark_aqua"}]
+execute if score @s ri_rank matches 2 if score @s ri_stage matches 2 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"red",bold:true},{text:"Light Membrane shattered into Water Membrane! Rank 2 Middle Stage (Scarlet Red Essence).",color:"red"}]
+execute if score @s ri_rank matches 2 if score @s ri_stage matches 3 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"red",bold:true},{text:"Water Membrane condensed into Stone Membrane! Rank 2 Upper Stage (Dark Red Essence).",color:"dark_red"}]
+execute if score @s ri_rank matches 2 if score @s ri_stage matches 4 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"red",bold:true},{text:"Stone Membrane crystallized into Crystal Membrane! Rank 2 Peak Stage (Abyssal Crimson Essence).",color:"dark_red"}]
+execute if score @s ri_rank matches 3 if score @s ri_stage matches 2 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"white",bold:true},{text:"Light Membrane shattered into Water Membrane! Rank 3 Middle Stage (Blossom Silver Essence).",color:"white"}]
+execute if score @s ri_rank matches 3 if score @s ri_stage matches 3 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"white",bold:true},{text:"Water Membrane condensed into Stone Membrane! Rank 3 Upper Stage (Bright Silver Essence).",color:"aqua"}]
+execute if score @s ri_rank matches 3 if score @s ri_stage matches 4 run tellraw @s [{text:"[Aperture Breakthrough] ",color:"white",bold:true},{text:"Stone Membrane crystallized into Crystal Membrane! Rank 3 Peak Stage (Snow Silver Essence).",color:"white"}]

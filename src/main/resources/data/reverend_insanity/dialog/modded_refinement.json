@@ -1,0 +1,160 @@
+{
+  "type": "minecraft:multi_action",
+  "title": {
+    "text": "\u2726 Immortal Gu Refinement Cauldron (Client Mod UI) \u2726",
+    "color": "light_purple",
+    "bold": true
+  },
+  "body": [
+    {
+      "type": "minecraft:item",
+      "item": {
+        "id": "minecraft:warped_fungus_on_a_stick",
+        "components": {
+          "minecraft:item_model": "reverend_insanity:golden_moon_gu"
+        }
+      },
+      "description": {
+        "text": "Select a Refinement Formula below to fuse Rank 1 -> Rank 2 -> Rank 3 Gu Worms:",
+        "color": "yellow"
+      }
+    }
+  ],
+  "columns": 2,
+  "actions": [
+    {
+      "label": {
+        "text": "Refine Rank 2 Moonglow Gu",
+        "color": "blue",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Moonlight Gu + Jade Skin Gu + 80 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 501"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 2 Four Flavors Liquor Worm",
+        "color": "gold",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Liquor Worm + 80 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 502"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 2 White Jade Gu",
+        "color": "white",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Jade Skin Gu + White Boar Gu + 90 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 503"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 2 Blood Moon Gu",
+        "color": "dark_red",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Moonlight Gu + Vitality Leaf Gu + 85 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 504"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 3 Golden Moon Gu",
+        "color": "gold",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Moonglow Gu + Little Light Gu + 300 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 505"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 3 Chainsaw Golden Centipede",
+        "color": "yellow",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Iron Bone Gu + Blood Moon Gu + 300 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 506"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 3 Sky Canopy Gu",
+        "color": "aqua",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: White Jade Gu + Moon Raiment Gu + 350 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 507"
+      }
+    },
+    {
+      "label": {
+        "text": "Refine Rank 3 Thunder Wings Gu",
+        "color": "light_purple",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Requires: Moon Raiment Gu + Ear Grass + 300 Essence",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 508"
+      }
+    },
+    {
+      "label": {
+        "text": "\u2b05 Return to Aperture Screen",
+        "color": "green"
+      },
+      "tooltip": {
+        "text": "Back to Primeval Sea Aperture UI",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 50"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+tellraw @s [{text:"=== [Reverend Insanity Admin Commands] ===",color:"gold",bold:true}]
+tellraw @s [{text:"• /function reverend_insanity:admin/clear_cultivation",color:"yellow"},{text:" - Wipe your own cultivation & Gu back to mortal",color:"gray"}]
+tellraw @s [{text:"• /execute as <player> run function reverend_insanity:admin/clear_cultivation",color:"yellow"},{text:" - Wipe a specific player's cultivation",color:"gray"}]
+tellraw @s [{text:"• /function reverend_insanity:admin/clear_cultivation_target",color:"yellow"},{text:" - Wipe nearest player's cultivation",color:"gray"}]
+tellraw @s [{text:"• /function reverend_insanity:admin/purge_cultivation_target",color:"yellow"},{text:" - Wipe ALL players & persistent storage",color:"gray"}]
+tellraw @s [{text:"• /function reverend_insanity:admin/reroll_aptitude",color:"aqua"},{text:" - Force-reroll exact Aptitude % (20-99%)",color:"gray"}]
+tellraw @s [{text:"• /function reverend_insanity:admin/max_cultivation",color:"green"},{text:" - Grant Rank 3 Peak, 99% Grade A, and all 19 Gu",color:"gray"}]
+tellraw @s [{text:"• /function reverend_insanity:admin/refill_essence",color:"aqua"},{text:" - Instantly refill Primeval Sea to Max",color:"gray"}]

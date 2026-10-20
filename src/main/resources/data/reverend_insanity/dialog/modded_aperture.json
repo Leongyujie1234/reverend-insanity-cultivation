@@ -1,0 +1,147 @@
+{
+  "type": "minecraft:multi_action",
+  "title": {
+    "text": "\u2726 Immortal Primeval Sea Aperture (Client Mod UI) \u2726",
+    "color": "aqua",
+    "bold": true
+  },
+  "body": [
+    {
+      "type": "minecraft:item",
+      "item": {
+        "id": "minecraft:warped_fungus_on_a_stick",
+        "components": {
+          "minecraft:item_model": "reverend_insanity:aperture_talisman"
+        }
+      },
+      "description": {
+        "text": "Primeval Sea Core \u2022 Rank 1 Green Copper -> Rank 2 Red Steel -> Rank 3 White Silver",
+        "color": "gold"
+      }
+    },
+    {
+      "type": "minecraft:plain_message",
+      "contents": {
+        "text": "Hotkeys: [R/G/V/B] Cast Active Slots 1-4  \u2022  [O] Aperture UI  \u2022  [P] Refinement Cauldron  \u2022  [M] Meditate",
+        "color": "aqua"
+      }
+    }
+  ],
+  "columns": 2,
+  "actions": [
+    {
+      "label": {
+        "text": "\u2726 Awaken Aperture (Hope Gu)",
+        "color": "green",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Opens your Primeval Sea and rolls D/C/B/A/Extreme Aptitude",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 10"
+      }
+    },
+    {
+      "label": {
+        "text": "\u26a1 Assault Aperture Wall (+25%)",
+        "color": "yellow",
+        "bold": true
+      },
+      "tooltip": {
+        "text": "Consumes Primeval Essence to push towards Rank 2 Red Steel & Rank 3 White Silver",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 8"
+      }
+    },
+    {
+      "label": {
+        "text": "\ud83e\uddd8 Toggle Primeval Meditation (3x)",
+        "color": "light_purple"
+      },
+      "tooltip": {
+        "text": "Triples Primeval Essence recovery speed",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 7"
+      }
+    },
+    {
+      "label": {
+        "text": "\u2697 Open Gu Refinement Cauldron",
+        "color": "gold"
+      },
+      "tooltip": {
+        "text": "Switch to the Graphical Gu Refinement Cauldron UI",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 60"
+      }
+    },
+    {
+      "label": {
+        "text": "[Slot 1 \u2022 Key R] Cast Equipped Gu",
+        "color": "aqua"
+      },
+      "tooltip": {
+        "text": "Fires the Gu Worm bound to Slot 1 (Sneak+Right-Click any Gu to bind)",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 1"
+      }
+    },
+    {
+      "label": {
+        "text": "[Slot 2 \u2022 Key G] Cast Equipped Gu",
+        "color": "aqua"
+      },
+      "tooltip": {
+        "text": "Fires the Gu Worm bound to Slot 2",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 2"
+      }
+    },
+    {
+      "label": {
+        "text": "[Slot 3 \u2022 Key V] Cast Equipped Gu",
+        "color": "aqua"
+      },
+      "tooltip": {
+        "text": "Fires the Gu Worm bound to Slot 3",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 3"
+      }
+    },
+    {
+      "label": {
+        "text": "[Slot 4 \u2022 Key B] Cast Equipped Gu",
+        "color": "aqua"
+      },
+      "tooltip": {
+        "text": "Fires the Gu Worm bound to Slot 4",
+        "color": "gray"
+      },
+      "action": {
+        "type": "minecraft:run_command",
+        "command": "trigger ri_action set 4"
+      }
+    }
+  ]
+}
